@@ -1,0 +1,27 @@
+[user]
+	name = Gergely Tamas Kurucz
+	email = temaruk@gmail.com
+[color]
+  ui = auto
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[core]
+  whitespace = fix,-indent-with-non-tab,-indent-with-tab,trailing-space,cr-at-eol
+  editor = subl -w
+	excludesfile = /Users/gergely/.gitignore_global
+[alias]
+  df = !git diff --no-prefix && git diff --staged --no-prefix
+  clear = reset --hard
+  st = status
+  co = checkout
+  br = branch
+  ci = commit
+  last = log -l HEAD
+  unadd = reset HEAD --
+  sm = submodule
+[credential]
+	helper = osxkeychain

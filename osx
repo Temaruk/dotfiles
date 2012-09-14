@@ -1,0 +1,16 @@
+# Speed up Expose animations
+defaults write com.apple.dock expose-animation-duration -float 0.15
+
+# Avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Enable subpixel font rendering on non-Apple LCDs
+defaults write NSGlobalDomain AppleFontSmoothing -int 2
+
+# Finder:
+
+# Disable the File Extension Change Warning
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true

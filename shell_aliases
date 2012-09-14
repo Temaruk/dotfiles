@@ -1,0 +1,27 @@
+# aliases
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g ......='../../../../..'
+alias -g .......='../../../../../..'
+
+# aliases for git
+alias gsync='git pull && git push'
+alias gpinup='git pull && git submodule init && git submodule update'
+
+# aliases for drush
+# alias dldrupal='drush dl --drupal-rpoject-rename'
+
+alias most='history 0 | awk '\''{print $2}'\'' | awk '\''BEGIN{FS="|"}{print $1}'\'' | sort | uniq -c | sort -n | tail -n 20 | sort -nr'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias ls='ls -G'
+alias lla='ls -la'
+alias ll='ls -l'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
