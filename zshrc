@@ -150,6 +150,22 @@ drushen() {
   drush -y en "$*"; drush cc all;
 }
 
+# json pretty print
+function pjson {
+    if [ $# -gt 0 ];
+        then
+        for arg in $@
+        do
+            if [ -f $arg ];
+                then
+                less $arg | python -m json.tool
+            else
+                echo "$arg" | python -m json.tool
+            fi
+        done
+    fi
+}
+
 # settings for git info in rprompt
 setopt prompt_subst
 autoload -Uz vcs_info
