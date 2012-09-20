@@ -6,6 +6,7 @@ alias -g ......='../../../../..'
 alias -g .......='../../../../../..'
 
 # aliases for git
+alias g='git'
 alias gsync='git pull && git push'
 alias gpinup='git pull && git submodule init && git submodule update'
 
