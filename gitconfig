@@ -29,6 +29,6 @@
   lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   a = add .
   this = !git init && git add . && git commit -m \"initial commit\"
-  alias = !git config --list | grep -E 'alias\.' | sed -E 's/alias\.([^=]*)=(.*)/\1 => \2/' | sort
+  alias = !git config --list | grep -E 'alias\\.' | sed -E 's/alias\\.([^=]*)=(.*)/\\1 => \\2/' | sort
 [credential]
 	helper = osxkeychain
