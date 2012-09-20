@@ -16,12 +16,20 @@
 [alias]
   df = !git diff --no-prefix && git diff --staged --no-prefix
   clear = reset --hard
-  st = status
+  s = status
   co = checkout
-  br = branch
+  b = branch
   ci = commit
+  cim = commit -m
   last = log -l HEAD
   unadd = reset HEAD --
   sm = submodule
+  f = fetch
+  cp = cherry-pick
+  lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lpg = lp --graph
+  a = add .
+  this = !git init && git add . && git commit -m \"initial commit\"
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
 [credential]
 	helper = osxkeychain
