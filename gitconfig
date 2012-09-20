@@ -27,7 +27,6 @@
   f = fetch
   cp = cherry-pick
   lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  lpg = lp --graph
   a = add .
   this = !git init && git add . && git commit -m \"initial commit\"
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t=> \\2/' | sort
