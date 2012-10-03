@@ -1,8 +1,18 @@
 [user]
 	name = Gergely Tamas Kurucz
 	email = temaruk@gmail.com
+[branch]
+  autosetuprebase = always
+[push]
+  default = tracking
+[rerere]
+  enabled = 1
+  autoupdate = true
 [color]
   ui = auto
+  status = auto
+  branch = auto
+  interactive = auto
 [color "diff"]
   meta = yellow bold
   frag = magenta bold
