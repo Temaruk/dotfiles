@@ -139,7 +139,7 @@ draddsub() {
 }
 
 drupalcs() {
-  phpcs --standard=Drupal "$*"; 
+  phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme "$*";
 }
 
 drushdisun() {
