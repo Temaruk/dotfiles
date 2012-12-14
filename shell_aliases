@@ -10,9 +10,6 @@ alias g='git'
 alias gsync='git pull && git push'
 alias gpinup='git pull && git submodule init && git submodule update'
 
-# aliases for drush
-# alias dldrupal='drush dl --drupal-rpoject-rename'
-
 alias most='history 0 | awk '\''{print $2}'\'' | awk '\''BEGIN{FS="|"}{print $1}'\'' | sort | uniq -c | sort -n | tail -n 20 | sort -nr'
 
 alias rm='rm -i'
