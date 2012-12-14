@@ -23,8 +23,8 @@ zsh:
 	$(Q)cp -r zkbd ${INSTALL_DIR}/.zkbd && echo 'Installed .zkbd directory'
 	$(Q)touch ${INSTALL_DIR}/.z_cache
 	$(Q)cp bash_profile ${INSTALL_DIR}/.bash_profile && echo 'Installed .bash_profile'
-	$(Q)cp bash_aliases ${INSTALL_DIR}/.bash_aliases && echo 'Installed .bash_aliases'
 	$(Q)cp shell_aliases ${INSTALL_DIR}/.shell_aliases && echo 'Installed .shell_aliases'
+	$(Q)cp osx_aliases ${INSTALL_DIR}/.osx_aliases && echo 'Installed .osx_aliases'
 	$(Q)chsh -s `which zsh` || echo 'Failed to set zsh as default shell, install it and make zsh'
 
 git:

@@ -1,5 +1,5 @@
 source ~/.profile # Get the paths
-source ~/.bash_aliases  # get aliases
+source ~/.shell_aliases  # get aliases
 source ~/.git-completion.bash
 
 export CLICOLOR=1

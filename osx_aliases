@@ -1,0 +1,9 @@
+# pasteboard from cli
+alias c='pbcopy'
+alias p='pbpaste'
+
+# open phpstorm
+alias pstorm='open -a /Applications/PhpStorm.app'
+
+# macports
+alias pup='sudo port selfupdate && sudo port upgrade outdated'

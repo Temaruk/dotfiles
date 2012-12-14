@@ -59,18 +59,18 @@ for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
 done
 
 autoload zkbd
+
 # exports
 if [ $KERNEL = "Darwin" ]; then
   source ~/.zkbd/xterm-mac
+  source ~/.osx_aliases
 
   # macports
   export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
   export MANPATH=/opt/local/share/man:$MANPATH
+
   # mamp
   export PATH=$PATH:/Applications/MAMP/Library/bin/
-
-  alias c='pbcopy'
-  alias p='pbpaste'
 fi
 
 # key bindings
