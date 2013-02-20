@@ -1,6 +1,12 @@
 source /etc/profile
-source ~/.profile
-source ~/.shell_aliases
+
+if [[ -f $HOME/.profile ]]; then
+  source $HOME/.profile
+fi
+
+if [[ -f $HOME/.shell_aliases ]]; then
+  source ~/.shell_aliases
+fi
 
 HISTFILE=~/.histfile
 HISTSIZE=10000
@@ -61,9 +67,15 @@ done
 autoload zkbd
 
 # exports
-if [ $KERNEL = "Darwin" ]; then
-  source ~/.zkbd/xterm-mac
-  source ~/.osx_aliases
+if [[ $KERNEL = "Darwin" ]]; then
+  
+  if [[ -f $HOME/.zkbd/xterm-mac ]]; then
+    source $HOME/.zkbd/xterm-mac
+  fi
+
+  if [[ -f $HOME/.osx_aliases ]]; then
+    source $HOME/.osx_aliases
+  fi
 
   # macports
   export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
@@ -152,18 +164,18 @@ drushen() {
 
 # json pretty print
 function pjson {
-    if [ $# -gt 0 ];
-        then
-        for arg in $@
-        do
-            if [ -f $arg ];
-                then
-                less $arg | python -m json.tool
-            else
-                echo "$arg" | python -m json.tool
-            fi
-        done
-    fi
+  if [ $# -gt 0 ];
+      then
+      for arg in $@
+      do
+          if [ -f $arg ];
+              then
+              less $arg | python -m json.tool
+          else
+              echo "$arg" | python -m json.tool
+          fi
+      done
+  fi
 }
 
 # settings for git info in rprompt

@@ -15,7 +15,7 @@ endif
 # Diff command to use
 DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
-general_modules = zsh git vim todo.txt
+general_modules = aliases zsh git vim todo.txt
 # Todo: add osx support properly
 
 # Main make target, installs everything
@@ -26,10 +26,13 @@ zsh:
 	$(Q)cp zshrc ${INSTALL_DIR}/.zshrc && echo 'Installed .zshrc'
 	$(Q)cp -r zkbd ${INSTALL_DIR}/.zkbd && echo 'Installed .zkbd directory'
 	$(Q)touch ${INSTALL_DIR}/.z_cache
+	$(Q)chsh -s `which zsh` || echo 'Failed to set zsh as default shell, install it and make zsh'
+
+aliases:
+	$(TITLE) "Installing aliases"
 	$(Q)cp bash_profile ${INSTALL_DIR}/.bash_profile && echo 'Installed .bash_profile'
 	$(Q)cp shell_aliases ${INSTALL_DIR}/.shell_aliases && echo 'Installed .shell_aliases'
 	$(Q)cp osx_aliases ${INSTALL_DIR}/.osx_aliases && echo 'Installed .osx_aliases'
-	$(Q)chsh -s `which zsh` || echo 'Failed to set zsh as default shell, install it and make zsh'
 
 git:
 	$(TITLE) "Installing git config"
