@@ -189,3 +189,7 @@ vcs_info_wrapper() {
 PS1='[%n@%m:%/]%# '
 PROMPT='[%{$fg[red]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%}:%{$fg[blue]%}%/%{$reset_color%}] %# '
 RPROMPT=$'$(vcs_info_wrapper)'
+
+# Todotxt
+export TODOTXT_DEFAULT_ACTION=ls
+export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'

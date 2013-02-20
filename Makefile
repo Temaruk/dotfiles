@@ -15,7 +15,7 @@ endif
 # Diff command to use
 DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
-general_modules = zsh git vim
+general_modules = zsh git vim todo.txt
 # Todo: add osx support properly
 
 # Main make target, installs everything
@@ -42,6 +42,11 @@ vim:
 	$(Q)cp vimrc ${INSTALL_DIR}/.vimrc && echo 'Installed .vimrc'
 	$(Q)cp -r vim ${INSTALL_DIR}/.vim && echo 'Installed .vim directory'
 
+todo.txt:
+	$(TITLE) "Installing todo.txt config"
+	$(Q)mkdir -p ${INSTALL_DIR}/.todo || $(SEPARATOR)
+	$(Q)cp todo.cfg ${INSTALL_DIR}/.todo/config
+
 diff:
 	$(TITLE) "Diffing dotfiles\n"
 	$(Q)echo "| zshrc:\n"
@@ -66,6 +71,9 @@ diff:
 	$(Q)$(DIFF) vimrc ${INSTALL_DIR}/.vimrc || $(SEPARATOR)
 	$(Q)echo "| vim:\n"
 	$(Q)$(DIFF) vim ${INSTALL_DIR}/.vim || $(SEPARATOR)
+
+	$(Q)echo "| todo.txt config:\n"
+	$(Q)$(DIFF) todo.cfg ${INSTALL_DIR}/.todo/config || $(SEPARATOR)
 
 # @todo: Solve if VERBOSE=true
 clean:
