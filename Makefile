@@ -5,12 +5,15 @@ OS=`uname -s`
 
 # Output formatting
 TITLE = @echo '[+]'
-SEPARATOR=echo "\n-----\n"
+SEPARATOR = echo "\n-----\n"
 ifndef VERBOSE
 	Q = @
 else
 	Q = @echo ' '
 endif
+
+# Diff command to use
+DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
 general_modules = zsh git vim
 # Todo: add osx support properly
@@ -42,27 +45,27 @@ vim:
 diff:
 	$(TITLE) "Diffing dotfiles\n"
 	$(Q)echo "| zshrc:\n"
-	$(Q)diff zshrc ${INSTALL_DIR}/.zshrc || $(SEPARATOR)
+	$(Q)$(DIFF) zshrc ${INSTALL_DIR}/.zshrc || $(SEPARATOR)
 	$(Q)echo "| zkbd:\n"
-	$(Q)diff zkbd ${INSTALL_DIR}/.zkbd || $(SEPARATOR)
+	$(Q)$(DIFF) zkbd ${INSTALL_DIR}/.zkbd || $(SEPARATOR)
 	$(Q)echo "| bash_profile:\n"
-	$(Q)diff bash_profile ${INSTALL_DIR}/.bash_profile || $(SEPARATOR)
+	$(Q)$(DIFF) bash_profile ${INSTALL_DIR}/.bash_profile || $(SEPARATOR)
 	$(Q)echo "| shell_aliases:\n"
-	$(Q)diff shell_aliases ${INSTALL_DIR}/.shell_aliases || $(SEPARATOR)
+	$(Q)$(DIFF) shell_aliases ${INSTALL_DIR}/.shell_aliases || $(SEPARATOR)
 	$(Q)echo "| osx_aliases:\n"
-	$(Q)diff osx_aliases ${INSTALL_DIR}/.osx_aliases || $(SEPARATOR)
+	$(Q)$(DIFF) osx_aliases ${INSTALL_DIR}/.osx_aliases || $(SEPARATOR)
 
 	$(Q)echo "| gitconfig:\n"
-	$(Q)diff gitconfig ${INSTALL_DIR}/.gitconfig || $(SEPARATOR)
+	$(Q)$(DIFF) gitconfig ${INSTALL_DIR}/.gitconfig || $(SEPARATOR)
 	$(Q)echo "| gitignore_global:\n"
-	$(Q)diff gitignore_global ${INSTALL_DIR}/.gitignore_global || $(SEPARATOR)
+	$(Q)$(DIFF) gitignore_global ${INSTALL_DIR}/.gitignore_global || $(SEPARATOR)
 	$(Q)echo "| gitk:\n"
-	$(Q)diff gitk ${INSTALL_DIR}/.gitk || $(SEPARATOR)
+	$(Q)$(DIFF) gitk ${INSTALL_DIR}/.gitk || $(SEPARATOR)
 
 	$(Q)echo "| vimrc:\n"
-	$(Q)diff vimrc ${INSTALL_DIR}/.vimrc || $(SEPARATOR)
+	$(Q)$(DIFF) vimrc ${INSTALL_DIR}/.vimrc || $(SEPARATOR)
 	$(Q)echo "| vim:\n"
-	$(Q)diff vim ${INSTALL_DIR}/.vim || $(SEPARATOR)
+	$(Q)$(DIFF) vim ${INSTALL_DIR}/.vim || $(SEPARATOR)
 
 # @todo: Solve if VERBOSE=true
 clean:
