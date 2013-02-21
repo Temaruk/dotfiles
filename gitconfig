@@ -40,5 +40,8 @@
   a = add .
   this = !git init && git add . && git commit -m \"initial commit\"
   alias = !git config --list | grep -E 'alias\\.' | sed -E 's/alias\\.([^=]*)=(.*)/\\1 => \\2/' | sort
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  todo = grep --heading --break --ignore-case -e ' FIX: *' -e ' TODO: *'
+  untracked = ls-files --other --exclude-standard
 [credential]
 	helper = osxkeychain
