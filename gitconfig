@@ -26,7 +26,7 @@
 [alias]
   df = !git diff --no-prefix && git diff --staged --no-prefix
   clear = reset --hard
-  s = status
+  s = status -sb
   co = checkout
   b = branch
   ci = commit
