@@ -178,6 +178,28 @@ function pjson {
   fi
 }
 
+
+#
+# Git
+#
+
+# Get current branch name.
+function _git_current_branch() {
+  git symbolic-ref HEAD --short;
+}
+
+# Shorthand for git pull to local branch from remote branch with
+# same name.
+function gpl() {
+  git pull origin `_git_current_branch`;
+}
+
+# Shorthand for git push from local branch to remote branch with
+# same name.
+funciton gps() {
+  git push origin `_git_current_branch`;
+}
+
 # settings for git info in rprompt
 setopt prompt_subst
 autoload -Uz vcs_info
