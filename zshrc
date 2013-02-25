@@ -172,6 +172,20 @@ drushen() {
   drush -y en "$*"; drush cc all;
 }
 
+# Install Drupal site via drush.
+drushsi() {
+  if [[ $# -eq 1 ]]; then
+    drush si --account-name="$1" --account-pass="$1";
+  elif [[ $# -eq 2 ]]; then
+    drush si "$1" --account-name="$2" --account-pass="$2";
+  fi
+}
+
+
+#
+# Helpers
+#
+
 # json pretty print
 function pjson {
   if [ $# -gt 0 ];
