@@ -141,23 +141,33 @@ zmodload zsh/net/socket
 # some handy options
 setopt no_hup hist_verify
 
-# drupal and drush related functions
+
+#
+# Drupal and drush
+#
+
+# Download Drupal in a project folder via drush.
 dldrupal() {
   drush dl --drupal-project-rename="$*";
 }
 
+# Download a Drupal project, use git submodules for checking out
+# new projects.
 draddsub() {
   drush -d dl "$*" --package-handler=git_drupalorg --gitsubmodule;
 }
 
+# Run PHP_CodeSniffer on folder/file.
 drupalcs() {
   phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme "$*";
 }
 
+# Disable and uninstall Drupal modules via drush.
 drushdisun() {
   drush -y dis "$*"; drush -y pm-uninstall "$*"; drush cron;
 }
 
+# Enable Drupal modules via drush.
 drushen() {
   drush -y en "$*"; drush cc all;
 }
@@ -219,11 +229,17 @@ vcs_info_wrapper() {
   fi
 }
 
+
+#
 # Prompt
+#
 PS1='[%n@%m:%/]%# '
 PROMPT='[%{$fg[red]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%}:%{$fg[blue]%}%/%{$reset_color%}] %# '
 RPROMPT=$'$(vcs_info_wrapper)'
 
+
+#
 # Todotxt
+#
 export TODOTXT_DEFAULT_ACTION=ls
 export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
