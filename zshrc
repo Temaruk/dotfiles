@@ -346,8 +346,40 @@ vcs_info_wrapper() {
 #
 # Prompt
 #
+
 PS1='[%n@%m:%/]%# '
-PROMPT='[%{$fg[red]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%}:%{$fg[blue]%}%/%{$reset_color%}] %# '
+
+# Left prompt
+#
+# 2 lines:
+#   1: Username, hostname, pwd, optional bitnami env info.
+#   2: Hour, minute, second.
+#
+# Example:
+#   [username@hostname:pwd] prompt_bitnami_info
+#   [hour:minute:second] %
+#
+PROMPT='[\
+%{$fg[red]%}%n\
+%{$reset_color%}@\
+%{$fg[green]%}%m\
+%{$reset_color%}:\
+%{$fg[blue]%}%/\
+%{$reset_color%}]\
+%{$fg[red]%}$(prompt_bitnami_info)\
+
+%{$reset_color%}[\
+%{$fg[red]%}%D{%H}\
+%{$reset_color%}:\
+%{$fg[green]%}%D{%M}\
+%{$reset_color%}:\
+%{$fg[blue]%}%D{%S}\
+%{$reset_color%}] %# '
+
+# Right prompt
+#
+# git info, see vcs_info_wrapper()
+#
 RPROMPT=$'$(vcs_info_wrapper)'
 
 
