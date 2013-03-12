@@ -29,6 +29,7 @@
   s = status -sb
   co = checkout
   b = branch
+  bdate = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short)%09%(refname:short)'
   ci = commit
   cim = commit -m
   last = log -l HEAD
