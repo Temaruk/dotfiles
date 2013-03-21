@@ -42,7 +42,7 @@
   bdate = for-each-ref --sort=-committerdate refs/heads/ --format='%(committerdate:short)%09%(refname:short)'
 
   ; Delete merged local branches.
-  bdm = !git branch --merged | grep -v master | xargs git branch -diff
+  bdm = !git branch --merged | grep -v master | xargs git branch -d
 
   ci = commit
   cim = commit -m
