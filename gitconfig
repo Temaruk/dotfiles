@@ -32,8 +32,11 @@
 
  ; Fancy aliases 
 [alias]
+  ; Diff, including staged changes.
   df = !git diff --no-prefix && git diff --staged --no-prefix
+
   clear = reset --hard
+
   s = status -sb
   co = checkout
   b = branch
@@ -46,21 +49,49 @@
 
   ci = commit
   cim = commit -m
+
   last = log -l HEAD
   unadd = reset HEAD --
   sm = submodule
   f = fetch
   cp = cherry-pick
+
+  ; Pretty log.
   lp = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
   a = add .
+
+  ; Init shorthand.
   this = !git init && git add . && git commit -m \"initial commit\"
 
   ; List git aliases.
   alias = !git config --list | grep -E 'alias\\.' | sed -E 's/alias\\.([^=]*)=(.*)/\\1 => \\2/' | sort
+
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+
+  ; Find todos in repo code.
   todo = grep --heading --break --ignore-case -e ' FIX: *' -e ' TODO: *'
 
   ; List untracked files.
   untracked = ls-files --other --exclude-standard
+
+  ; Mark unstaged files as untracked, temporarily.
+  ; Works only with files, not directories.
+  assume   = update-index --assume-unchanged
+  unassume = update-index --no-assume-unchanged
+  assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+
+  ; Take a snapshot of your current working tree without removing
+  ; the changes from your tree.
+  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+
+  ; Easy merging, pick a file(s) from the current branch or
+  ; the merged branch respectively:
+  ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
+  theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+
 [credential]
 	helper = osxkeychain
+
+[diff]
+  algorithm = patience
