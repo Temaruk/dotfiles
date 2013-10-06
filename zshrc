@@ -77,25 +77,15 @@ if [[ $KERNEL = "Darwin" ]]; then
     source $HOME/.osx_aliases
   fi
 
-  # Directory where BitNami stacks are stored.
-  if [[ -d /Applications/BitNami ]]; then
-    BITNAMIDIR=/Applications/BitNami
-  fi
-
   # macports
   export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
   export MANPATH=/opt/local/share/man:$MANPATH
 
-  # If the current shell is a bitnami stack console, set the PATH.
-  # todo: document where this variable comes from
-  # (hint: use_* file in a bitnami stack)
-  if [[ -n $BITNAMI_STACK_PATH ]]; then
-    export PATH=$BITNAMI_STACK_PATH:$PATH
-  fi
+  # apache macport
+  export PATH=/opt/local/apache2/bin:$PATH
 
-  # mamp
-  # todo: deprecated?
-  # export PATH=$PATH:/Applications/MAMP/Library/bin/
+  # mysql macport
+  export PATH=/opt/local/lib/mysql55/bin:$PATH
 fi
 
 # key bindings
@@ -215,92 +205,6 @@ function pjson {
   fi
 }
 
-# BitNami Stack switcher
-#
-# todo: improve argument handling (1 and 2)
-#
-if [[ -d $BITNAMIDIR ]]; then
-  function bitnami() {
-    BITNAMI_STACK_REGEX=^(mamp|nodejs|django)$
-    BITNAMI_CTL_REGEX=^(help|start|stop|restart|status)$
-
-    # If no arguments.
-    if [[ $# -eq 0 ]]; then
-      _bitnami_0
-
-    # If 1 argument.
-    elif [[ $# -eq 1 ]]; then
-      case $1 in
-        mamp)
-          source ~BITNAMIDIR/mampstack-5.4.12-0/use_mampstack
-          echo "Changed PATH to include BitNami MAMPSTACK."
-          ;;
-        nodejs)
-          source ~BITNAMIDIR/nodejs-0.8.15-1/use_nodejs
-          echo "Changed PATH to include BitNami NODEJS."
-          ;;
-        django)
-          source ~BITNAMIDIR/djangostack-1.4.5-0/use_djangostack
-          echo "Changed PATH to include BitNami DJANGOSTACK."
-          ;;
-      esac
-
-    # If 2 arguments.
-    elif [[ $# -eq 2 ]]; then
-      if [[ $1 =~ $BITNAMI_STACK_REGEX && $2 =~ $BITNAMI_CTL_REGEX ]]; then
-        case $1 in
-          mamp)
-            ~BITNAMIDIR/mampstack-5.4.12-0/ctlscript.sh $2
-            ;;
-          nodejs)
-            ~BITNAMIDIR/nodejs-0.8.15-1/ctlscript.sh $2
-            ;;
-          django)
-            ~BITNAMIDIR/djangostack-1.4.5-0/ctlscript.sh $2
-            ;;
-        esac
-      else
-        echo "Invalid command!"
-      fi
-    else
-      echo "Invalid number of arguments! (1 or 2)"
-    fi
-  }
-
-  # Helper for calling bitnami() without arguments.
-  #
-  # Provides a select to choose which of the available stacks should
-  # be used.
-  #
-  function _bitnami_0() {
-    # the powerful select
-    PROMPT3="Choose BitNami stack: "
-    select f in $(ls ~BITNAMIDIR)
-    do
-      if [[ "$REPLY" = q ]]
-      then
-        break
-      elif [[ -d ~BITNAMIDIR/$f ]]; then
-        BITNAMI_ENV="$f"
-        echo "Started console for BitNami $f stack"
-        
-        ~BITNAMIDIR/$f/use_*
-
-        BITNAMI_ENV=""
-        echo "Exit from console for BitNami $f stack"
-        break
-      fi
-    done
-  }
-fi
-
-# Helper for printing information about the current bitnami console.
-function prompt_bitnami_info() {
-  if [[ -n $BITNAMI_ENV ]]; then
-    echo "%{$reset_color%} - [BitNami environment: %{$fg[red]%}$BITNAMI_ENV%{$reset_color%}]"
-  fi
-}
-
 
 #
 # Git
@@ -352,11 +256,11 @@ PS1='[%n@%m:%/]%# '
 # Left prompt
 #
 # 2 lines:
-#   1: Username, hostname, pwd, optional bitnami env info.
+#   1: Username, hostname, pwd.
 #   2: Hour, minute, second.
 #
 # Example:
-#   [username@hostname:pwd] prompt_bitnami_info
+#   [username@hostname:pwd]
 #   [hour:minute:second] %
 #
 PROMPT='[\
@@ -366,7 +270,7 @@ PROMPT='[\
 %{$reset_color%}:\
 %{$fg[blue]%}%/\
 %{$reset_color%}]\
-%{$fg[red]%}$(prompt_bitnami_info)\
+%{$fg[red]%}\
 
 %{$reset_color%}[\
 %{$fg[red]%}%D{%H}\
