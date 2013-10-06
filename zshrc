@@ -223,14 +223,22 @@ function _git_current_branch() {
   git symbolic-ref HEAD --short;
 }
 
+# Get tracked remote of current branch (if any).
+# TODO: Handle if there is no tracking branch.
+function _git_current_branch_tracked_remote() {
+  git rev-parse --symbolic-full-name --abbrev-ref `_git_current_branch`@{u};
+}
+
 # Shorthand for git pull to local branch from remote branch with
 # same name.
+# TODO: get remote from tracked branch of current
 function gpl() {
   git pull origin `_git_current_branch`;
 }
 
 # Shorthand for git push from local branch to remote branch with
 # same name.
+# TODO: get remote from tracked branch of current
 funciton gps() {
   git push origin `_git_current_branch`;
 }
