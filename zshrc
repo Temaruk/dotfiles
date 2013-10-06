@@ -20,6 +20,11 @@ setopt appendhistory autocd extendedglob nomatch
 unsetopt beep notify
 bindkey -v
 
+setopt inc_append_history
+
+# Share command history between sessions.
+setopt share_history
+
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '/Users/gergely/.zshrc'
