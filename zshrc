@@ -296,7 +296,9 @@ RPROMPT=$'$(vcs_info_wrapper)'
 export TODOTXT_DEFAULT_ACTION=ls
 export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
 
-
+#
+# Private stuff
+#
 if [[ -f $HOME/.zshrc_private ]]; then
   source $HOME/.zshrc_private
 fi
