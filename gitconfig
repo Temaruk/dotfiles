@@ -67,7 +67,7 @@
   ; List git aliases.
   alias = !git config --list | grep -E 'alias\\.' | sed -E 's/alias\\.([^=]*)=(.*)/\\1 => \\2/' | sort
 
-  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  hist = log --graph --all --full-history --color --branches --decorate --oneline
 
   ; Find todos in repo code.
   todo = grep --heading --break --ignore-case -e ' FIX: *' -e ' TODO: *'
@@ -89,6 +89,8 @@
   ; the merged branch respectively:
   ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
   theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+
+  btrack = for-each-ref --format='%(refname:short) <- %(upstream:short)' refs/heads
 
 [credential]
 	helper = osxkeychain
