@@ -68,6 +68,9 @@ autoload zkbd
 
 # exports
 if [[ $KERNEL = "Darwin" ]]; then
+
+  export LC_ALL=C
+  export LANG=C
   
   if [[ -f $HOME/.zkbd/xterm-mac ]]; then
     source $HOME/.zkbd/xterm-mac
