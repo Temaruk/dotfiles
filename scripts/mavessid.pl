@@ -1,4 +1,13 @@
 #!/usr/bin/perl
+
+#
+# Source: http://hup.hu/node/125845
+#
+# Find the nearest wifi AP.
+#
+# TODO: Make it OSX compatible.
+#
+
 $if=wlan0;
 
 @v=`sudo iwlist $if scan`;
