@@ -1,3 +1,8 @@
+#
+# TODO: Start using oh-my-zsh.
+# TODO: Refactor the mess in this file.
+#
+
 source /etc/profile
 
 if [[ -f $HOME/.profile ]]; then
@@ -94,6 +99,11 @@ if [[ $KERNEL = "Darwin" ]]; then
 
   # mysql macport
   export PATH=/opt/local/lib/mysql55/bin:$PATH
+
+  # gopath
+  if [[ -d $HOME/Work/go ]]; then
+    export GOPATH=$HOME/Work/go
+  fi
 fi
 
 # key bindings
