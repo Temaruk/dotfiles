@@ -100,9 +100,18 @@ if [[ $KERNEL = "Darwin" ]]; then
   # mysql macport
   export PATH=/opt/local/lib/mysql55/bin:$PATH
 
+  # goroot
+  if [[ -f /opt/local/bin/go ]]; then
+    export GOROOT=/opt/local/bin/go
+    export PATH=$PATH:$GOROOT/bin
+    launchctl setenv GOROOT $GOROOT
+  fi
+
   # gopath
   if [[ -d $HOME/Work/go ]]; then
     export GOPATH=$HOME/Work/go
+    export PATH=$PATH:$GOPATH/bin
+    launchctl setenv GOPATH $GOPATH
   fi
 fi
 
