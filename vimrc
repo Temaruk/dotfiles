@@ -3,6 +3,9 @@ if has("gui_running")
   set background=dark
 endif
 
+set encoding=utf-8
+set fileencoding=utf-8
+
 set shiftwidth=2
 set tabstop=2
 set softtabstop=2

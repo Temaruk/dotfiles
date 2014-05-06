@@ -34,9 +34,14 @@
 .Spotlight-V100
 .Trashes
 Icon?
+!Icon?/
 ehthumbs.db
 Thumbs.db
 
 # IDE generated files #
 #######################
 .idea
+
+# Other generated files #
+#########################
+.sass-cache
