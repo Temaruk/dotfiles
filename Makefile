@@ -15,7 +15,7 @@ endif
 # Diff command to use
 DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
-general_modules = git git_submodules aliases vimconfig
+general_modules = git git_submodules aliases vimconfig zsh
 # Todo: add osx support properly
 
 # Main make target, installs everything
