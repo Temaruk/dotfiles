@@ -50,7 +50,7 @@ git_submodules:
 	$(Q)git submodule init || true
 	$(Q)git submodule update || true
 # Remove .git directories from submodules as we don't want to copy those
-	$(Q)for i in `git submodule | cut -d ' ' -f 3`; do rm -rf $i/.git; done
+	$(Q)for i in `git submodule | cut -d ' ' -f 3`; do rm -rf $$i/.git; done
 
 vimconfig:
 	$(TITLE) "Installing vim config"
@@ -90,4 +90,4 @@ diff:
 # @todo: Solve if VERBOSE=true
 clean:
 	$(TITLE) "Deleting temporary files"
-	$(Q)for i in `git submodule | cut -d ' ' -f 3`; do rm -rf $i; done
+	$(Q)for i in `git submodule | cut -d ' ' -f 3`; do rm -rf $$i; done
