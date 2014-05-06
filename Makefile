@@ -15,7 +15,7 @@ endif
 # Diff command to use
 DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
-general_modules = aliases zsh git vim todo.txt
+general_modules = aliases zsh git git_submodules vim
 # Todo: add osx support properly
 
 # Main make target, installs everything
@@ -26,6 +26,8 @@ zsh:
 	$(Q)cp zshrc ${INSTALL_DIR}/.zshrc && echo 'Installed .zshrc'
 	$(Q)cp -r zkbd ${INSTALL_DIR}/.zkbd && echo 'Installed .zkbd directory'
 	$(Q)touch ${INSTALL_DIR}/.z_cache
+	$(Q)cp -r oh-my-zsh ${INSTALL_DIR}/.oh-my-zsh
+	$(Q)cp -r oh-my-zsh-custom/* ${INSTALL_DIR}/.oh-my-zsh/custom/
 	$(Q)chsh -s `which zsh` || echo 'Failed to set zsh as default shell, install it and make zsh'
 
 aliases:
@@ -40,15 +42,18 @@ git:
 	$(Q)cp gitignore_global ${INSTALL_DIR}/.gitignore_global && echo 'Installed .gitignore_global'
 	$(Q)cp gitk ${INSTALL_DIR}/.gitk && echo 'Installed .gitk'
 
+git_submodules:
+	$(TITLE) "Checking out git submodules"
+# Todo fix me:
+	$(Q)git submodule init || true
+	$(Q)git submodule update || true
+# Remove .git directories from submodules as we don't want to copy those
+	$(Q)for i in `git submodule | cut -d ' ' -f 3`; do rm -rf $i/.git; done
+
 vim:
 	$(TITLE) "Installing vim config"
 	$(Q)cp vimrc ${INSTALL_DIR}/.vimrc && echo 'Installed .vimrc'
 	$(Q)cp -r vim ${INSTALL_DIR}/.vim && echo 'Installed .vim directory'
-
-todo.txt:
-	$(TITLE) "Installing todo.txt config"
-	$(Q)mkdir -p ${INSTALL_DIR}/.todo || $(SEPARATOR)
-	$(Q)cp todo.cfg ${INSTALL_DIR}/.todo/config
 
 diff:
 	$(TITLE) "Diffing dotfiles\n"
@@ -63,6 +68,11 @@ diff:
 	$(Q)echo "| osx_aliases:\n"
 	$(Q)$(DIFF) osx_aliases ${INSTALL_DIR}/.osx_aliases || $(SEPARATOR)
 
+	$(Q)echo "| oh-my-zsh:\n"
+	$(Q)$(DIFF) oh-my-zsh ${INSTALL_DIR}/.oh-my-zsh || $(SEPARATOR)
+	$(Q)echo "| oh-my-zsh-custom:\n"
+	$(Q)$(DIFF) -r oh-my-zsh-custom ${INSTALL_DIR}/.oh-my-zsh/custom || $(SEPARATOR)
+
 	$(Q)echo "| gitconfig:\n"
 	$(Q)$(DIFF) gitconfig ${INSTALL_DIR}/.gitconfig || $(SEPARATOR)
 	$(Q)echo "| gitignore_global:\n"
@@ -75,9 +85,7 @@ diff:
 	$(Q)echo "| vim:\n"
 	$(Q)$(DIFF) vim ${INSTALL_DIR}/.vim || $(SEPARATOR)
 
-	$(Q)echo "| todo.txt config:\n"
-	$(Q)$(DIFF) todo.cfg ${INSTALL_DIR}/.todo/config || $(SEPARATOR)
-
 # @todo: Solve if VERBOSE=true
 clean:
 	$(TITLE)Deleting temporary files
+	$(Q)for i in `git submodule | cut -d ' ' -f 3`; do rm -rf $i; done
