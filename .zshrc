@@ -74,17 +74,29 @@ if [[ $KERNEL = "Darwin" ]]; then
   fi
 
   # macports
-  export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
-  export MANPATH=/opt/local/share/man:$MANPATH
+  if [[ -d /opt/local/bin && -d /opt/local/sbin ]]; then
+    export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
+  fi
+
+  # macports manpages
+  if [[ -d /opt/local/share/man ]]; then
+    export MANPATH=/opt/local/share/man:$MANPATH
+  fi
 
   # apache macport
-  export PATH=/opt/local/apache2/bin:$PATH
+  if [[ -d /opt/local/apache2/bin ]]; then
+    export PATH=/opt/local/apache2/bin:$PATH
+  fi
 
   # mysql macport
-  export PATH=/opt/local/lib/mysql55/bin:$PATH
+  if [[ -d /opt/local/lib/mysql55/bin ]]; then
+    export PATH=/opt/local/lib/mysql55/bin:$PATH
+  fi
 
   #percona
-  export PATH=/opt/local/lib/percona/bin:$PATH
+  if [[ -d /opt/local/lib/percona/bin ]]; then
+    export PATH=/opt/local/lib/percona/bin:$PATH
+  fi
 
   # goroot
   if [[ -d /opt/local/go ]]; then
