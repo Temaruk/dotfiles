@@ -25,7 +25,7 @@
   whitespace = fix,-indent-with-non-tab,-indent-with-tab,trailing-space,cr-at-eol
   excludesfile = ~/.gitignore_global
 
- ; Fancy aliases
+; Fancy aliases
 [alias]
   ; Diff, including staged changes.
   df = !git diff --no-prefix && git diff --staged --no-prefix
@@ -97,9 +97,7 @@
   tool = diffmerge
 
 [mergetool "diffmerge"]
-  ;path = diffmerge
-  ;cmd = "diffmerge --merge --result=\$MERGED \$LOCAL \$BASE \$REMOTE"
   trustExitCode = true
 
 [include]
-  path = ~/dotfiles_private/.gitconfig_private
+  path = ~/.gitconfig_private
