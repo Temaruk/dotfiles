@@ -15,7 +15,7 @@ endif
 # Diff command to use
 DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
-general_modules = git git_submodules aliases vimconfig zsh
+general_modules = git git_submodules aliases vimconfig oh-my-zsh zsh
 # Todo: add osx support properly
 
 # Main make target, installs everything
@@ -26,11 +26,12 @@ zsh:
 	$(Q)cp .zshrc ${INSTALL_DIR} && echo 'Installed .zshrc'
 	$(Q)cp -r .zkbd ${INSTALL_DIR} && echo 'Installed .zkbd directory'
 	$(Q)touch ${INSTALL_DIR}/.z_cache
-	
-	$(Q)cp -r .oh-my-zsh ${INSTALL_DIR}
-	$(Q)cp -r oh-my-zsh-custom/* ${INSTALL_DIR}/.oh-my-zsh/custom/
-	
+
 	$(Q)chsh -s `which zsh` || echo 'Failed to set zsh as default shell, install it and make zsh'
+
+oh-my-zsh:
+	$(Q)cp -r .oh-my-zsh ${INSTALL_DIR} && echo 'Installed .oh-my-zsh'
+	$(Q)cp -r oh-my-zsh-custom/* ${INSTALL_DIR}/.oh-my-zsh/custom/ && echo "Installed .oh-my-zsh custom stuff: \n`find oh-my-zsh-custom -maxdepth 2 -type d`"
 
 aliases:
 	$(TITLE) "Installing aliases"
