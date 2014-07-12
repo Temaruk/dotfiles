@@ -1,3 +1,9 @@
+#
+# TODO:
+# - Cleanup, extract .osx_variables
+# - Make use of antigen (https://github.com/zsh-users/antigen)
+#
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
