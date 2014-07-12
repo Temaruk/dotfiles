@@ -73,6 +73,13 @@ if [[ $KERNEL = "Darwin" ]]; then
     source $HOME/.osx_aliases
   fi
 
+  # Set preferred editor.
+  if [[ `command -v atom` >/dev/null ]]; then
+    export VISUAL=atom
+    export EDITOR=atom
+    export GIT_EDITOR='atom --wait'
+  fi
+
   # macports
   if [[ -d /opt/local/bin && -d /opt/local/sbin ]]; then
     export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
