@@ -121,7 +121,9 @@ if [[ $KERNEL = "Darwin" ]]; then
 fi
 
 # Composer
-export PATH=$HOME/.composer/vendor/bin:$PATH
+if [[ -d $HOME/.composer ]]; then
+  export PATH=$HOME/.composer/vendor/bin:$PATH
+fi
 
 # # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
