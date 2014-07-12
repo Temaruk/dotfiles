@@ -144,3 +144,10 @@ fi
 if [[ -f $HOME/.zshrc_private ]]; then
   source $HOME/.zshrc_private
 fi
+
+# Drush completion
+if [[ -f $HOME/drush.complete.sh ]]; then
+  autoload bashcompinit
+  bashcompinit
+  source $HOME/drush.complete.sh
+fi
