@@ -19,7 +19,6 @@ antigen bundles <<EOBUNDLES
   vagrant
   colored-man
   composer
-  drush
   npm
   rvm
   bower
