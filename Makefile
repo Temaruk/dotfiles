@@ -15,7 +15,7 @@ endif
 # Diff command to use
 DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
-general_modules = git git_submodules aliases vimconfig oh-my-zsh zsh
+general_modules = git git_submodules aliases vimconfig zsh-antigen zsh
 # Todo: add osx support properly
 
 # Main make target, installs everything
@@ -29,9 +29,8 @@ zsh:
 
 	$(Q)chsh -s `which zsh` || echo 'Failed to set zsh as default shell, install it and make zsh'
 
-oh-my-zsh:
-	$(Q)cp -r .oh-my-zsh ${INSTALL_DIR} && echo 'Installed .oh-my-zsh'
-	$(Q)cp -r oh-my-zsh-custom/* ${INSTALL_DIR}/.oh-my-zsh/custom/ && echo "Installed .oh-my-zsh custom stuff: \n`find oh-my-zsh-custom -maxdepth 2 -type d`"
+zsh-antigen:
+	$(Q)cp -r .zsh-antigen ${INSTALL_DIR} && echo 'Installed .zsh-antigen'
 
 aliases:
 	$(TITLE) "Installing aliases"
@@ -71,10 +70,8 @@ diff:
 	$(Q)echo "| .osx_aliases:\n"
 	$(Q)$(DIFF) .osx_aliases ${INSTALL_DIR}/.osx_aliases || $(SEPARATOR)
 
-	$(Q)echo "| .oh-my-zsh:\n"
-	$(Q)$(DIFF) .oh-my-zsh ${INSTALL_DIR}/.oh-my-zsh || $(SEPARATOR)
-	$(Q)echo "| .oh-my-zsh-custom:\n"
-	$(Q)$(DIFF) -r oh-my-zsh-custom ${INSTALL_DIR}/.oh-my-zsh/custom || $(SEPARATOR)
+	$(Q)echo "| .zsh-antigen:\n"
+	$(Q)$(DIFF) .zsh-antigen ${INSTALL_DIR}/.zsh-antigen || $(SEPARATOR)
 
 	$(Q)echo "| .gitconfig:\n"
 	$(Q)$(DIFF) .gitconfig ${INSTALL_DIR}/.gitconfig || $(SEPARATOR)

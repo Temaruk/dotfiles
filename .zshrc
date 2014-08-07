@@ -1,77 +1,70 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+##
+#
+# Antigen config
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="ys"
+# Source antigen,
+ZSHA_BASE=$HOME/.zsh-antigen
+source $ZSHA_BASE/antigen.zsh
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Uncomment this to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment to change how often before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want to disable command autocorrection
-# DISABLE_CORRECTION="true"
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment following line if you want to disable marking untracked files under
-# VCS as dirty. This makes repository status check for large repositories much,
-# much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment following line if you want to  shown in the command execution time stamp
-# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
-# yyyy-mm-dd
+# Set history timestamp format.
 HIST_STAMPS="yyyy-mm-dd"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(colored-man macports git composer drupal drush vagrant pip zsh-syntax-highlighting)
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
 
-source $ZSH/oh-my-zsh.sh
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundles <<EOBUNDLES
+  git
+  pip
+  vagrant
+  colored-man
+  composer
+  drush
+  npm
+  rvm
+  bower
+EOBUNDLES
 
-# User configuration
+# Other bundles.
+antigen-bundle zsh-users/zsh-history-substring-search
 
-KERNEL=`uname`
+# Custom local bundles.
+antigen-bundle $HOME/dotfiles/oh-my-zsh-custom/plugins/drupal
 
-if [[ -f $HOME/.shell_aliases ]]; then
-  source ~/.shell_aliases
+# OS specific bundles.
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  antigen bundles <<EOBUNDLES
+    osx
+    macports
+    apache2-macports
+EOBUNDLES
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+  antigen bundle command-not-found
 fi
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-# export MANPATH="/usr/local/man:$MANPATH"
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
 
-if [[ $KERNEL = "Darwin" ]]; then
+# Load the theme.
+antigen theme ys
+
+# Tell antigen that you're done.
+antigen apply
+
+##
+#
+# Exports
+
+export VISUAL=vim
+export EDITOR=vim
+export GIT_EDITOR=vim
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
 
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
-
-  if [[ -f $HOME/.zkbd/xterm-mac ]]; then
-    source $HOME/.zkbd/xterm-mac
-  fi
-
-  if [[ -f $HOME/.osx_aliases ]]; then
-    source $HOME/.osx_aliases
-  fi
 
   # Set preferred editor.
   if [[ `command -v atom` >/dev/null ]]; then
@@ -100,7 +93,7 @@ if [[ $KERNEL = "Darwin" ]]; then
     export PATH=/opt/local/lib/mysql55/bin:$PATH
   fi
 
-  #percona
+  # percona
   if [[ -d /opt/local/lib/percona/bin ]]; then
     export PATH=/opt/local/lib/percona/bin:$PATH
   fi
@@ -125,24 +118,22 @@ if [[ -d $HOME/.composer ]]; then
   export PATH=$HOME/.composer/vendor/bin:$PATH
 fi
 
-# # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
+##
 #
-# Private stuff
-#
-if [[ -f $HOME/.zshrc_private ]]; then
-  source $HOME/.zshrc_private
+# Sourcing
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ -f $HOME/.zkbd/xterm-mac ]]; then
+    source $HOME/.zkbd/xterm-mac
+  fi
+
+  if [[ -f $HOME/.osx_aliases ]]; then
+    source $HOME/.osx_aliases
+  fi
+fi
+
+if [[ -f $HOME/.shell_aliases ]]; then
+  source ~/.shell_aliases
 fi
 
 # Drush completion
@@ -150,4 +141,9 @@ if [[ -f $HOME/drush.complete.sh ]]; then
   autoload bashcompinit
   bashcompinit
   source $HOME/drush.complete.sh
+fi
+
+# Private stuff
+if [[ -f $HOME/.zshrc_private ]]; then
+  source $HOME/.zshrc_private
 fi
