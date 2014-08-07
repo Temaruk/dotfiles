@@ -5,5 +5,5 @@
 	path = oh-my-zsh-custom/plugins/zsh-syntax-highlighting
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "antigen"]
-	path = antigen
+	path = .zsh-antigen
 	url = https://github.com/zsh-users/antigen.git
