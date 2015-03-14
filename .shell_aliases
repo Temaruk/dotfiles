@@ -24,14 +24,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# todo.sh
-alias t='todo.sh'
-alias tl='todo.sh ls'
-alias ta='todo.sh add'
-alias td='todo.sh do'
-alias tr='todo.sh replace'
-alias tp='todo.sh pri'
-
 # drush
 alias drushfra='drush -y fra --force'
 
@@ -40,3 +32,4 @@ alias cvscdiff='cvs diff -bup "$@" | colordiff | less -R'
 
 # ack
 alias ack='ack-5.16'
+
