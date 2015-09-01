@@ -146,3 +146,8 @@ fi
 if [[ -f $HOME/.zshrc_private ]]; then
   source $HOME/.zshrc_private
 fi
+
+# NVM
+if [[ -f $HOME/.nvm/nvm.sh ]]; then
+  source $HOME/.nvm/nvm.sh
+fi
