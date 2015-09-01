@@ -16,7 +16,7 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-alias ls='ls --color'
+alias ls='ls -G'
 alias lla='ls -la'
 alias ll='ls -l'
 
@@ -32,4 +32,3 @@ alias cvscdiff='cvs diff -bup "$@" | colordiff | less -R'
 
 # ack
 alias ack='ack-5.16'
-
