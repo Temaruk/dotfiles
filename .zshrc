@@ -9,47 +9,6 @@ source $ZSHA_BASE/antigen.zsh
 # Set history timestamp format.
 HIST_STAMPS="yyyy-mm-dd"
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
-
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundles <<EOBUNDLES
-  git
-  pip
-  vagrant
-  colored-man
-  composer
-  npm
-  rvm
-  bower
-EOBUNDLES
-
-# Other bundles.
-antigen-bundle zsh-users/zsh-history-substring-search
-
-# Custom local bundles.
-antigen-bundle $HOME/dotfiles/oh-my-zsh-custom/plugins/drupal
-
-# OS specific bundles.
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  antigen bundles <<EOBUNDLES
-    osx
-    macports
-    apache2-macports
-EOBUNDLES
-elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-  antigen bundle command-not-found
-fi
-
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Load the theme.
-antigen theme ys
-
-# Tell antigen that you're done.
-antigen apply
-
 ##
 #
 # Exports
@@ -65,16 +24,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export LC_ALL=en_US.UTF-8
   export LANG=en_US.UTF-8
 
-  # Set preferred editor.
-  if [[ `command -v atom` >/dev/null ]]; then
-    export VISUAL=atom
-    export EDITOR=atom
-    export GIT_EDITOR='atom --wait'
-  fi
-
   # macports
   if [[ -d /opt/local/bin && -d /opt/local/sbin ]]; then
     export PATH=/opt/local/bin:/opt/local/sbin/:$PATH
+  fi
+
+  if [[ -d /opt/local/Library/Frameworks/Python.framework/Versions/Current/bin ]]; then
+    export PATH=/opt/local/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
   fi
 
   # macports manpages
@@ -151,3 +107,60 @@ fi
 if [[ -f $HOME/.nvm/nvm.sh ]]; then
   source $HOME/.nvm/nvm.sh
 fi
+
+if [[ $+commands[hub] ]]; then
+  eval "$(hub alias -s)"
+fi
+
+if [[ $+commands[python] ]]; then
+  export PYTHONPATH=$(python -c "import os; print(os.path.dirname(os.__file__) + '/site-packages')")
+fi
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundles <<EOBUNDLES
+  fasd
+  history
+  git
+  pip
+  vagrant
+  colored-man
+  composer
+  npm
+  rvm
+  bower
+  docker
+  docker-compose
+EOBUNDLES
+
+# Other bundles.
+antigen-bundle zsh-users/zsh-history-substring-search
+
+antigen bundle zsh-users/zsh-completions src
+
+# OS specific bundles.
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  antigen bundles <<EOBUNDLES
+    osx
+    macports
+    apache2-macports
+EOBUNDLES
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+  antigen bundle command-not-found
+fi
+
+# Custom local bundles.
+antigen-bundle $HOME/dotfiles/oh-my-zsh-custom/plugins/hub
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Load the theme.
+antigen theme ys
+
+# Tell antigen that you're done.
+antigen apply
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
