@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ansible-playbook --ask-become-pass --check -i ./playbooks/inventory ./playbooks/osx.yml

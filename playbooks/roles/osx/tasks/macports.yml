@@ -1,0 +1,10 @@
+---
+- name: Install macports packages
+  become: yes
+  become_method: sudo
+  macports:
+    name={{ item }}
+    state=present
+  with_items:
+    - git
+    - zsh
