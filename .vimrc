@@ -36,6 +36,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'romainl/vim-qf'
   Plug 'kshenoy/vim-signature'
   Plug 'terryma/vim-multiple-cursors'
+  Plug 'chase/vim-ansible-yaml'
 call plug#end()
 
 let mapleader=" "
@@ -215,6 +216,8 @@ let g:tagbar_type_go = {
 \ }
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+let g:ansible_options = {'ignore_blank_lines': 0}
 
 if exists('$ITERM_PROFILE')
   if exists('$TMUX')
