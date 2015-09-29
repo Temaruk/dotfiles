@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'spf13/PIV', {'for': 'php'}
   Plug 'fatih/vim-go', {'for': 'go'}
   Plug 'rking/ag.vim'
-"  Disable it for now until I find out why is it messing up hitting space.
   Plug 'Shougo/neocomplete.vim'
   Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
   Plug 'scrooloose/syntastic'
@@ -37,6 +36,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'kshenoy/vim-signature'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'chase/vim-ansible-yaml'
+  Plug 'flazz/vim-colorschemes'
 call plug#end()
 
 let mapleader=" "
@@ -99,8 +99,6 @@ let g:lightline = {
   \ 'colorscheme': 'default',
   \ }
 
-let base16colorspace=256
-colorscheme desert
 set background=dark
 
 if has("gui_running")
@@ -110,6 +108,8 @@ if has("gui_running")
   set background=dark
   set guioptions-=T  " Noo toolbar
 endif
+
+colorscheme solarized
 
 " autocomplete
 let g:AutoComplPop_BehaviorKeywordLength=4
