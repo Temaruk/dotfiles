@@ -1,3 +1,6 @@
+" Gergely Tamás Kurucz (Temaruk)
+
+" Plug config (plugins) {{{
 call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
   Plug 'spf13/PIV', {'for': 'php'}
@@ -36,7 +39,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'kshenoy/vim-signature'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'chase/vim-ansible-yaml'
+  Plug 'ciaranm/securemdodelines'
 call plug#end()
+" }}}
 
 let mapleader=" "
 nmap <leader>s :Unite -buffer-name=grep grep:.::<C-r><C-w><CR>
@@ -86,7 +91,7 @@ let SVNCommandEnableBufferSetup=1
 let SVNCommandEdit='split'
 
 " Set code completion on
-augroup filetypes
+augroup filetypes_completion
   au!
   au FileType c setlocal omnifunc=ccomplete#Complete
   au FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -162,6 +167,7 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore "**/*.pyc"
       \ -g ""'
 
+" Golang {{{
 let g:go_fmt_command = "goimports"
 
 augroup filetype_go
@@ -178,6 +184,7 @@ augroup filetype_go
   au FileType go nmap <Leader>i <Plug>(go-info)
   au FileType go nmap <Leader>e <Plug>(go-rename)
 augroup END
+" }}}
 
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
@@ -229,6 +236,8 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 let g:ansible_options = {'ignore_blank_lines': 0}
 
+let g:secure_modelines_allowed_items = ['foldmethod', 'foldlevel']
+
 if exists('$ITERM_PROFILE')
   if exists('$TMUX')
     let &t_SI = "\<Esc>[3 q"
@@ -238,3 +247,5 @@ if exists('$ITERM_PROFILE')
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
   endif
 end
+
+" vim:foldmethod=marker:foldlevel=0
