@@ -36,7 +36,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'kshenoy/vim-signature'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'chase/vim-ansible-yaml'
-  Plug 'flazz/vim-colorschemes'
 call plug#end()
 
 let mapleader=" "
@@ -109,7 +108,7 @@ if has("gui_running")
   set guioptions-=T  " Noo toolbar
 endif
 
-colorscheme solarized
+colorscheme base16-solarized
 
 " autocomplete
 let g:AutoComplPop_BehaviorKeywordLength=4
@@ -139,6 +138,8 @@ endif
 "nnoremap <space>b :Unite -quick-match buffer<cr>
 nnoremap <silent> <leader>b :<C-u>Unite -quick-match buffer bookmark<CR>
 nnoremap <leader>/ :Unite grep:.<cr>
+
+nnoremap <leader>. :CtrlPTag<cr>
 
 " Use the fuzzy matcher for everything
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
