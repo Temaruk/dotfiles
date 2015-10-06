@@ -1,9 +1,9 @@
+" vim:foldmethod=marker:foldlevel=0
 " Gergely Tamás Kurucz (Temaruk)
 
 " Plug config (plugins) {{{
 call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
-  Plug 'spf13/PIV', {'for': 'php'}
   Plug 'fatih/vim-go', {'for': 'go'}
   Plug 'rking/ag.vim'
   Plug 'Shougo/neocomplete.vim'
@@ -39,58 +39,112 @@ call plug#begin('~/.vim/plugged')
   Plug 'kshenoy/vim-signature'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'chase/vim-ansible-yaml'
-  Plug 'ciaranm/securemdodelines'
+  Plug 'ciaranm/securemodelines'
 call plug#end()
 " }}}
 
-let mapleader=" "
-nmap <leader>s :Unite -buffer-name=grep grep:.::<C-r><C-w><CR>
+" Colors {{{
+colorscheme base16-solarized
+set background=dark
 
-set backupdir=/tmp
-set backupskip=/tmp/*,/private/tmp/*
-set cursorline
-set directory=/tmp
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
+" }}}
+
+" Spaces & Tabs {{{
+set tabstop=2
+set shiftwidth=2
 set expandtab
-set hlsearch
+" }}}
+
+" UI Config {{{
+set nu
+set cursorline
 set lazyredraw
 set mouse=a
-set nobackup
 set nocompatible
-set nu
-set shiftwidth=2
 set showfulltag
 set smartcase
 set spell
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [%p%%]\ [LEN=%L]\ [POS=%l,%v]
-set tabstop=2
 set tf
+" }}}
+
+" Searching {{{
+set hlsearch
+
+" }}}
+
+" Shortcuts {{{
+" + opens up the tag definition - closes it
+map + :pta <C-R><C-W><CR>
+map - :pc<CR>
+
+vmap " :s/\%V/"/<CR><ESC>:s/\%#/"/<CR>i
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+imap <C-BS> <C-W>
+
+" }}}
+
+" Leader shortcuts {{{
+let mapleader=" ""{{{"}}}
+
+nmap <Leader>s :Unite -buffer-name=grep grep:.::<C-r><C-w><CR>
+
+map <Leader>t :set list!<CR>
+
+" Use Unite to navigate between buffers
+"nnoremap <space>b :Unite -quick-match buffer<cr>
+nnoremap <silent> <Leader>b :<C-u>Unite -quick-match buffer bookmark<CR>
+nnoremap <Leader>/ :Unite grep:.<cr>
+
+nnoremap <Leader>. :CtrlPTag<cr>
+" }}}
+
+" Backups {{{
+set nobackup
+set backupdir=/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=/tmp
 
 if $VIM_CRONTAB == "true"
   set nobackup
   set nowritebackup
 endif
+" }}}
 
+" Statusline {{{
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [%p%%]\ [LEN=%L]\ [POS=%l,%v]
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+" }}}
 
-" Jump to the last known line
-autocmd BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") |
-\   exe "normal g`\"" |
-\ endif
+" Lightline {{{
+let g:lightline = {
+  \ 'colorscheme': 'solarized_dark',
+  \ }
+" }}}
 
-" For jQuery
-au BufRead,BufNewFile *.js set ft=javascript.jquery
+" Autogroups {{{
+augroup file_read_write
+  " Jump to the last known line
+  au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
 
-"remove whitespaces from the end of all lines at saving
-autocmd BufWritePre * :%s/\s\+$//e
+  "remove whitespaces from the end of all lines at saving
+  au BufWritePre * :%s/\s\+$//e
+augroup END
+" }}}
 
-" + opens up the tag definition - closes it
-map + :pta <C-R><C-W><CR>
-map - :pc<CR>
-
-let SVNCommandEnableBufferSetup=1
-let SVNCommandEdit='split'
-
-" Set code completion on
+" Autocomplete {{{
 augroup filetypes_completion
   au!
   au FileType c setlocal omnifunc=ccomplete#Complete
@@ -102,63 +156,29 @@ augroup filetypes_completion
   au FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
-let g:lightline = {
-  \ 'colorscheme': 'default',
-  \ }
-
-set background=dark
-
-if has("gui_running")
-	" modify toolbar
-	set tbis=tiny
-  set guifont=Source\ Code\ Pro\ 12
-  set background=dark
-  set guioptions-=T  " Noo toolbar
-endif
-
-colorscheme base16-solarized
-
-" autocomplete
 let g:AutoComplPop_BehaviorKeywordLength=4
 
 let g:neocomplete#enable_at_startup = 1
+" }}}
 
-" visualize tabs
-set list
-exe "set listchars=tab:>-,trail:\xb7,eol:$,nbsp:\xb7"
-map <leader>t :set invlist<CR>
-set invlist
+" Invisible characters {{{
+set nolist
+exe "set listchars=tab:>-,trail:·,eol:$,nbsp:·"
+" }}}
 
-vmap " :s/\%V/"/<CR><ESC>:s/\%#/"/<CR>i
-
-imap <C-BS> <C-W>
-
-let g:DisableAutoPHPFolding = 1
-
-if &term =~ '256color'
-  " disable Background Color Erase (BCE) so that color schemes
-  " render properly when inside 256-color tmux and GNU screen.
-  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-  set t_ut=
-endif
-
-" Use Unite to navigate between buffers
-"nnoremap <space>b :Unite -quick-match buffer<cr>
-nnoremap <silent> <leader>b :<C-u>Unite -quick-match buffer bookmark<CR>
-nnoremap <leader>/ :Unite grep:.<cr>
-
-nnoremap <leader>. :CtrlPTag<cr>
-
+" Unite {{{
 " Use the fuzzy matcher for everything
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 
 " Use the rank sorter for everything
 call unite#filters#sorter_default#use(['sorter_rank'])
+" }}}
 
-set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
-
+" SuperTab {{{
 let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+" }}}
 
+" CtrlP {{{
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .git
       \ --ignore .svn
@@ -166,14 +186,17 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .DS_Store
       \ --ignore "**/*.pyc"
       \ -g ""'
+" }}}
 
 " Golang {{{
+set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+
 let g:go_fmt_command = "goimports"
 
 augroup filetype_go
   au!
-  au FileType go nmap <leader>t <Plug>(go-test)
-  au FileType go nmap <leader>c <Plug>(go-coverage)
+  au FileType go nmap <Leader>t <Plug>(go-test)
+  au FileType go nmap <Leader>c <Plug>(go-coverage)
   au FileType go nmap <Leader>ds <Plug>(go-def-split)
   au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
   au FileType go nmap <Leader>dt <Plug>(go-def-tab)
@@ -184,23 +207,6 @@ augroup filetype_go
   au FileType go nmap <Leader>i <Plug>(go-info)
   au FileType go nmap <Leader>e <Plug>(go-rename)
 augroup END
-" }}}
-
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:UltiSnipsUsePythonVersion = 3
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_go_checkers = ['gometalinter']
-let g:syntastic_go_gometalinter_args = "-D gotype"
 
 " Gotags support
 " Requires https://github.com/jstemmer/gotags
@@ -231,13 +237,20 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+" }}}
 
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+" Syntastic {{{
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:UltiSnipsUsePythonVersion = 3
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_go_checkers = ['gometalinter']
+let g:syntastic_go_gometalinter_args = "-D gotype"
+" }}}
 
-let g:ansible_options = {'ignore_blank_lines': 0}
-
-let g:secure_modelines_allowed_items = ['foldmethod', 'foldlevel']
-
+" Tmux {{{
 if exists('$ITERM_PROFILE')
   if exists('$TMUX')
     let &t_SI = "\<Esc>[3 q"
@@ -247,5 +260,11 @@ if exists('$ITERM_PROFILE')
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
   endif
 end
+" }}}
 
-" vim:foldmethod=marker:foldlevel=0
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+let g:ansible_options = {'ignore_blank_lines': 0}
+
+let g:secure_modelines_allowed_items = ['foldmethod', 'foldlevel']
+
