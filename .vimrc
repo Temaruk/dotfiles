@@ -133,6 +133,7 @@ let g:lightline = {
 
 " Autogroups {{{
 augroup file_read_write
+  au!
   " Jump to the last known line
   au BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
