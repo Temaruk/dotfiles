@@ -90,6 +90,8 @@ vmap <C-v> <Plug>(expand_region_shrink)
 
 imap <C-BS> <C-W>
 
+nmap <F8> :TagbarToggle<CR>
+
 " }}}
 
 " Leader shortcuts {{{
