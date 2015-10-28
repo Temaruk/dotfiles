@@ -182,6 +182,10 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 " }}}
 
+" CTags {{{
+set tags=./.tags;
+" }}}
+
 " CtrlP {{{
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .git
