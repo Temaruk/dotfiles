@@ -71,6 +71,7 @@ set showfulltag
 set smartcase
 set spell
 set tf
+set clipboard=unnamed
 " }}}
 
 " Searching {{{
