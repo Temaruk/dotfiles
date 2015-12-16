@@ -32,3 +32,8 @@ alias cvscdiff='cvs diff -bup "$@" | colordiff | less -R'
 
 # ack
 alias ack='ack-5.16'
+
+# docker
+alias doco='docker-compose'
+alias doma='docker-machine'
+

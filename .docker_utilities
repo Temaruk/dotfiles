@@ -1,0 +1,61 @@
+alias doco='docker-compose'
+alias doma='docker-machine'
+
+dcexec() {
+    # (for docker-compose containers)
+    # because it's tedious having to type
+    # `docker exec -it myproject_myservice_1 bash`
+    # every time I want a shell into a running container
+    if [ "$#" -gt 1 ]; then
+        arg="$@"
+    else
+        arg="bash"
+    fi
+    docker exec -it "${PWD##*/}_$1_1" $arg
+}
+# eg `dcexec myservice`
+
+dnsmasq-restart(){
+    echo "Restarting dnsmasq..."
+    sudo port unload dnsmasq
+    sudo port load dnsmasq
+}
+
+docker-machine-env() {
+    eval $(docker-machine env $1)
+}
+alias dme='docker-machine-env'
+
+docker-machine-dns() {
+    dmip=$(doma ip $1)
+    dnsconf=/opt/local/etc/dnsmasq.conf
+
+    if [ ! -e /etc/resolver/$1 ]; then
+        echo "adding $1 entry to resolvers"
+        sudo tee /etc/resolver/$1 >/dev/null <<EOF
+nameserver 127.0.0.1
+EOF
+    fi
+
+    if grep -q /$1/$dmip $dnsconf; then
+        echo "correct dnsmasq entry already exists"
+    elif grep -q ^address=/$1/ $dnsconf; then
+        echo "hostname $1 already present in dnsmasq - updating"
+        # remove line if ip already present for different hostname
+        sudo sed -i '' -E "\%^address=/[[:alnum:]_.-]+/$dmip%d" $dnsconf
+        # update existing hostname with new ip
+        sudo sed -i '' -E "s%^(address=/$1)/([[:digit:].]+)$%\1/$dmip%g" $dnsconf
+        dnsmasq-restart
+    else
+        # neither hostname nor ip are present
+        echo "adding $1/$dmip entry to dnsmasq"
+        echo "address=/$1/$dmip" | sudo tee -a /opt/local/etc/dnsmasq.conf
+        dnsmasq-restart
+    fi
+}
+docker-machine-use() {
+    docker-machine start $1
+    docker-machine-dns $1
+    docker-machine-env $1
+}
+alias dmuse='docker-machine-use'

@@ -164,3 +164,4 @@ antigen theme ys
 antigen apply
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.docker_utilities ] && source ~/.docker_utilities
