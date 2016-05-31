@@ -93,13 +93,6 @@ if [[ -f $HOME/.shell_aliases ]]; then
   source ~/.shell_aliases
 fi
 
-# Drush completion
-if [[ -f $HOME/drush.complete.sh ]]; then
-  autoload bashcompinit
-  bashcompinit
-  source $HOME/drush.complete.sh
-fi
-
 # Private stuff
 if [[ -f $HOME/.zshrc_private ]]; then
   source $HOME/.zshrc_private
