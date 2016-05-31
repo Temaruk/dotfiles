@@ -15,7 +15,7 @@ endif
 # Diff command to use
 DIFF = `which colordiff &> /dev/null && echo colordiff || echo diff`
 
-general_modules = git git_submodules aliases vimconfig zsh-antigen zsh
+general_modules = git git_submodules aliases vim zsh-antigen zsh
 # Todo: add osx support properly
 
 # Main make target, installs everything
@@ -52,10 +52,13 @@ git_submodules:
 # Remove .git directories from submodules as we don't want to copy those
 	$(Q)for i in `git submodule | cut -d ' ' -f 3`; do rm -rf $$i/.git; done
 
-vimconfig:
+vim:
 	$(TITLE) "Installing vim config"
 	$(Q)cp .vimrc ${INSTALL_DIR} && echo 'Installed .vimrc'
 	$(Q)cp -r .vim ${INSTALL_DIR} && echo 'Installed .vim directory'
+	$(TITLE) "Downloading Vim-plug"
+	$(Q)mkdir -p ${INSTALL_DIR}/.vim/autoload
+	$(Q)curl -sfLo ${INSTALL_DIR}/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 diff:
 	$(TITLE) "Diffing dotfiles\n"
