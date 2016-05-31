@@ -1,13 +1,14 @@
 ##
 #
-# Antigen config
+# Zplug
 
-# Source antigen,
-ZSHA_BASE=$HOME/.zsh-antigen
-source $ZSHA_BASE/antigen.zsh
+source ~/.zplug/init.zsh
 
 # Set history timestamp format.
 HIST_STAMPS="yyyy-mm-dd"
+
+fpath=(~/.zsh/completions $fpath)
+autoload -U compinit && compinit
 
 ##
 #
@@ -16,6 +17,7 @@ HIST_STAMPS="yyyy-mm-dd"
 export VISUAL=vim
 export EDITOR=vim
 export GIT_EDITOR=vim
+export ZSH_CACHE_DIR=$HOME/.zsh/cache
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -116,52 +118,46 @@ if [[ $+commands[python] ]]; then
   export PYTHONPATH=$(python -c "import os; print(os.path.dirname(os.__file__) + '/site-packages')")
 fi
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# Zplugins
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundles <<EOBUNDLES
-  fasd
-  history
-  git
-  pip
-  vagrant
-  colored-man
-  composer
-  npm
-  rvm
-  bower
-  docker
-  docker-compose
-EOBUNDLES
+zplug "zplug/zplug"
 
-# Other bundles.
-antigen-bundle zsh-users/zsh-history-substring-search
+zplug "robbyrussell/oh-my-zsh", use:"lib/*.zsh"
 
-antigen bundle zsh-users/zsh-completions src
+zplug "themes/ys", from:oh-my-zsh
 
-# OS specific bundles.
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  antigen bundles <<EOBUNDLES
-    osx
-    macports
-    apache2-macports
-EOBUNDLES
-elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-  antigen bundle command-not-found
-fi
+zplug "plugins/colored-man", from:oh-my-zsh
+zplug "plugins/fasd", from:oh-my-zsh
+zplug "plugins/history", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/pip", from:oh-my-zsh
+zplug "plugins/vagrant", from:oh-my-zsh
+zplug "plugins/colored-man", from:oh-my-zsh
+zplug "plugins/composer", from:oh-my-zsh
+zplug "plugins/npm", from:oh-my-zsh
+zplug "plugins/rvm", from:oh-my-zsh
+zplug "plugins/bower", from:oh-my-zsh
+zplug "plugins/docker", from:oh-my-zsh
+zplug "plugins/docker-compose", from:oh-my-zsh
+zplug "plugins/history-substring-search", from:oh-my-zsh
 
-# Custom local bundles.
-antigen-bundle $HOME/dotfiles/oh-my-zsh-custom/plugins/hub
+zplug "zsh-users/zsh-syntax-highlighting", nice:19
+zplug "zsh-users/zsh-completions"
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
+zplug "plugins/macports", from:oh-my-zsh, if:"[ $OSTYPE == *darwin* ]"
+zplug "plugins/osx", from:oh-my-zsh, if:"[ $OSTYPE == *darwin* ]"
 
-# Load the theme.
-antigen theme ys
+zplug load --verbose
 
-# Tell antigen that you're done.
-antigen apply
-
+# Source fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Nice docker utilities
 [ -f ~/.docker_utilities ] && source ~/.docker_utilities
+
+# History substring search keybindings
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
