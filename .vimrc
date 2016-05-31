@@ -6,7 +6,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
   Plug 'fatih/vim-go', {'for': 'go'}
   Plug 'rking/ag.vim'
-  Plug 'Shougo/neocomplete.vim'
   Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
   Plug 'scrooloose/syntastic'
   Plug 'airblade/vim-gitgutter'
@@ -40,6 +39,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'terryma/vim-multiple-cursors'
   Plug 'chase/vim-ansible-yaml'
   Plug 'ciaranm/securemodelines'
+
+  if has('nvim')
+    function! DoRemote(arg)
+      UpdateRemotePlugins
+    endfunction
+    Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+  else
+    Plug 'Shougo/neocomplete.vim'
+  endif
+
 call plug#end()
 " }}}
 
