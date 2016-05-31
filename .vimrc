@@ -263,8 +263,26 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:UltiSnipsUsePythonVersion = 3
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_go_checkers = ['gometalinter']
-let g:syntastic_go_gometalinter_args = "-D gotype"
+let g:syntastic_go_checkers = ['go', 'gometalinter']
+let g:syntastic_go_gometalinter_args = "-D gotype --vendor --fast -j 3"
+
+" Toggle -fast flag for gometalinter.
+nnoremap <leader>f :call FastGoLint()<cr>
+let g:golintfast = 1
+function! FastGoLint()
+  if g:golintfast
+    let g:golintfast = 0
+    let g:syntastic_go_gometalinter_args = "-D gotype --vendor --deadline=30s -j 3"
+    echo "Gometalinter: Slow"
+    SyntasticCheck
+  else
+    let g:golintfast = 1
+    let g:syntastic_go_gometalinter_args = "-D gotype --vendor --fast -j 3"
+    echo "Gometalinter: Fast"
+    SyntasticCheck
+  endif
+endfunction
+
 " }}}
 
 " Tmux {{{
