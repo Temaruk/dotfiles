@@ -53,7 +53,7 @@ call plug#end()
 " }}}
 
 " Colors {{{
-colorscheme base16-solarized
+colorscheme base16-solarized-dark
 set background=dark
 
 if &term =~ '256color'
@@ -139,7 +139,7 @@ set statusline+=%*
 
 " Lightline {{{
 let g:lightline = {
-  \ 'colorscheme': 'solarized_dark',
+  \ 'colorscheme': 'solarized',
   \ }
 " }}}
 
@@ -303,3 +303,5 @@ let g:ansible_options = {'ignore_blank_lines': 0}
 
 let g:secure_modelines_allowed_items = ['foldmethod', 'foldlevel']
 
+" let g:python3_host_prog = '/opt/local/bin/python3.5'
+" let g:loaded_python3_provider = 0
