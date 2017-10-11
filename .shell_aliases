@@ -24,15 +24,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# drush
-alias drushfra='drush -y fra --force'
-
-# cvs
-alias cvscdiff='cvs diff -bup "$@" | colordiff | less -R'
-
-# ack
-alias ack='ack-5.16'
-
 # docker
 alias doco='docker-compose'
 alias doma='docker-machine'
