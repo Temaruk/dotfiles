@@ -1,15 +1,4 @@
 ---
-- name: Create path for zsh-antigen
-  file:
-    path=~/.zsh-antigen
-    state=directory
-    mode=0755
-
-- name: Install zsh-antigen
-  get_url:
-    url=https://raw.githubusercontent.com/zsh-users/antigen/master/antigen.zsh
-    dest=~/.zsh-antigen/antigen.zsh
-
 - name: Create path for Vim-plug
   file:
     path=~/.vim/autoload
